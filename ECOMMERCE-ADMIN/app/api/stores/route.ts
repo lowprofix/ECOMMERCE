@@ -5,12 +5,10 @@ import prismadb from '@/lib/prismadb';
 
 export async function POST(
   req: Request,
-  { params }: { params: { storeId: string }}
 ) {
   try {
     const { userId } = auth();
     const body = await req.json();
-
     const { name, logoUrl } = body;
 
     if (!userId) {
@@ -21,26 +19,16 @@ export async function POST(
       return new NextResponse("Name is required", { status: 400 });
     }
 
-    const storeByUserId = await prismadb.store.findMany({
-      where: {
-        id: params.storeId,
-        userId,
-      }
-    });
-
-    if (!storeByUserId) {
-      return new NextResponse("Unauthorized", { status: 405 });
-    }
-
-
     const store = await prismadb.store.create({
       data: {
         name,
         userId,
         logoUrl,
-    
       }
     });
+
+    console.log('[STORES_POST]', store)
+
   
     return NextResponse.json(store);
   } catch (error) {

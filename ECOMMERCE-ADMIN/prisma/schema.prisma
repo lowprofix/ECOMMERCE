@@ -46,7 +46,7 @@ model Category {
   products        Product[] @relation("CategoryToProduct")
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
-  textDescription String    @default("") @db.LongText
+  textDescription String    @db.LongText
   availability    Availability[] // Relation to Availability model
 
   @@index([storeId])

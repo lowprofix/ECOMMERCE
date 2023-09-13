@@ -9,13 +9,9 @@ export async function GET(
 ) {
   try {
     
-
-    if (!params.storeId) {
+    if (!params?.storeId) {
       return new NextResponse("Store id is required", { status: 400 });
     }
-
-   
-    
 
     const store = await prismadb.store.findUnique({
       where: {
@@ -30,7 +26,6 @@ export async function GET(
     return new NextResponse("Internal error", { status: 500 });
   }
 };
-
 
 export async function PATCH(
   req: Request,
